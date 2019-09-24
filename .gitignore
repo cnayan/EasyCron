@@ -3,3 +3,7 @@
 ################################################################################
 
 /EasyCron.Api/.vs
+/EasyCron.Api/bin
+/EasyCron.Api/obj
+/EasyCron.UI/bin/Debug/netcoreapp3.0
+/EasyCron.UI/obj
