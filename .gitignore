@@ -7,3 +7,7 @@
 /EasyCron.Api/obj
 /EasyCron.UI/bin/Debug/netcoreapp3.0
 /EasyCron.UI/obj
+/EasyCron.UI/bin/Release/netcoreapp3.0/publish
+/EasyCron.UI/bin/Release/netcoreapp3.0
+/.vs
+/EasyCron.UI/bin
