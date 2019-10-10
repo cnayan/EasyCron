@@ -1,0 +1,47 @@
+﻿@page "/logs"
+
+@using EasyCron.UI.Models
+@inject EasyCron.UI.Apis.CronJobApi cronJobApi
+
+@if (logs == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>任务Id</th>
+                <th>是否成功</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>返回内容</th>
+                <th>错误消息</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var log in logs)
+            {
+            <tr>
+                <td>@log.JobId</td>
+                <td>@log.IsSuccess</td>
+                <td>@log.StartTime</td>
+                <td>@log.EndTime</td>
+                <td>@log.ResponseContent</td>
+                <td>@log.ErrorMessage</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<JobLog> logs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await cronJobApi.GetJobLogsList();
+        logs = result.List.ToList();
+    }
+}

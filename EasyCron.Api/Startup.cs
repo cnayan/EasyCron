@@ -42,7 +42,7 @@ namespace Bayantu.Evos.Services.CronJob.Api
                         ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
                     });
 
-            var connStr = Configuration["CronJob:MySqlConnectionString"];
+            var connStr = Configuration["ConnectionString"];
             services.AddHangfire(config =>
             {
                 config.UseStorage(new MySqlStorage(connStr));
@@ -56,7 +56,10 @@ namespace Bayantu.Evos.Services.CronJob.Api
             services.AddSingleton<ICronTranslator,CronTranslator>();
             services.AddTransient<IJobWorker, JobWorker>();
 
-            services.AddMvc();
+            services.AddMvc(_ =>
+            {
+                _.EnableEndpointRouting = false;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +74,8 @@ namespace Bayantu.Evos.Services.CronJob.Api
             {
                 Authorization = new[] { new HangfireDashboardAuthorizationFilter() }
             });
+
+            app.UseMvc();
         }
 
         public class HangfireDashboardAuthorizationFilter : IDashboardAuthorizationFilter

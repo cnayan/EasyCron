@@ -89,16 +89,16 @@ namespace Bayantu.Evos.Services.CronJob.Api.Controllers
         }
 
         [Route("getJobList")]
-        [HttpPost]
-        public async Task<IActionResult> GetJobListAsync([FromBody] JobListQuery query)
+        [HttpGet]
+        public async Task<IActionResult> GetJobListAsync([FromQuery] JobListQuery query)
         {
             var result = await _cronJobService.GetJobListAsync(query.PageNo, query.PageSize, query.Keywords);
             return Ok(result);
         }
 
         [Route("getJobLogList")]
-        [HttpPost]
-        public async Task<IActionResult> GetJobLogListAsync([FromBody] JobLogListQuery query)
+        [HttpGet]
+        public async Task<IActionResult> GetJobLogListAsync([FromQuery] JobLogListQuery query)
         {
             var result = await _cronJobService.GetJobLogList(query.JobId, query.PageNo, query.PageSize, query.Keywords, query.IsSuccess);
             return Ok(result);

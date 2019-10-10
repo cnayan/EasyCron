@@ -294,7 +294,11 @@ namespace EasyCron.Api.Implements
                 List = new List<JobLog>()
             };
 
-            var logs = _cronJobDbContext.JobLogs.Where(_ => _.JobId == jobId);
+            var logs = _cronJobDbContext.JobLogs.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(jobId))
+            {
+                logs = logs.Where(_ => _.JobId == jobId);
+            }
 
             if (!string.IsNullOrWhiteSpace(keywords))
             {

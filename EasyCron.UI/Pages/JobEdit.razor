@@ -1,0 +1,61 @@
+﻿@page "/edit"
+@using EasyCron.UI.Models;
+@using System.Text.Json;
+@using EasyCron.UI.Apis;
+@inject CronJobApi cronJobApi;
+<EditForm>
+
+</EditForm>
+<EditForm Model="@job" OnValidSubmit="@HandleValidSubmit">
+    <div class="form-group required">
+        <label for="jobName" class="col-sm-2 control-label">任务名称</label>
+        <div class="col-sm-10">
+            <InputText id="jobName" class="form-control" placeholder="" @bind-Value="job.Name" />
+        </div>
+    </div>
+    <div class="form-group required">
+        <label for="group" class="col-sm-2 control-label">分组</label>
+        <div class="col-sm-10">
+            <InputText id="group" class="form-control" placeholder="" @bind-Value="job.Group" />
+        </div>
+    </div>
+    <div class="form-group required">
+        <label for="cron" class="col-sm-2 control-label">间隔（Cron）</label>
+        <div class="col-sm-10">
+            <InputText id="cron" class="form-control" placeholder="" @bind-Value="job.Cron" />
+        </div>
+    </div>
+    <div class="form-group required">
+        <label for="callAddress" class="col-sm-2 control-label">调用地址</label>
+        <div class="col-sm-10">
+            <InputText id="callAddress" class="form-control" placeholder="" @bind-Value="job.CallAddress" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="paramJson" class="col-sm-2 control-label">请求参数</label>
+        <div class="col-sm-10">
+            <InputText id="paramJson" class="form-control" placeholder="" @bind-Value="job.ParamJson" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="remarks" class="col-sm-2 control-label">描述</label>
+        <div class="col-sm-10">
+            <InputTextArea id="remarks" class="form-control" placeholder="" @bind-Value="job.Remarks" />
+        </div>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary">保存</button>
+        <button type="button" class="btn btn-primary">取消</button>
+    </div>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+</EditForm>
+
+@code {
+    private Job job = new Job();
+
+    private async Task HandleValidSubmit()
+    {
+        await cronJobApi.SubmitJobAsync(job);
+    }
+}
